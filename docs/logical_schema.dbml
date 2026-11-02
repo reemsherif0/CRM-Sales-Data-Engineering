@@ -1,0 +1,46 @@
+Table fact_opportunities {
+  opportunity_id varchar [pk]
+  account_key integer [ref: > dim_account.account_key]
+  product_key integer [ref: > dim_product.product_key]
+  sales_agent_key integer [ref: > dim_sales_agent.sales_agent_key]
+  engage_date_key integer [ref: > dim_date.date_key]
+  close_date_key integer [ref: > dim_date.date_key]
+  deal_stage varchar
+  close_value integer
+}
+
+Table dim_account {
+  account_key integer [pk]
+  account_name varchar
+  sector varchar
+  year_established integer
+  revenue_musd double
+  employees integer
+  office_location varchar
+  parent_account_name varchar
+}
+
+Table dim_product {
+  product_key integer [pk]
+  product_name varchar
+  series varchar
+  sales_price integer
+}
+
+Table dim_sales_agent {
+  sales_agent_key integer [pk]
+  sales_agent_name varchar
+  manager varchar
+  regional_office varchar
+}
+
+Table dim_date {
+  date_key integer [pk]
+  full_date date
+  year integer
+  quarter integer
+  month integer
+  month_name varchar
+  day integer
+  day_of_week varchar
+}

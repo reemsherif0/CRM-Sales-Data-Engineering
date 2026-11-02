@@ -1,0 +1,24 @@
+services:
+  scheduler:
+    volumes:
+      - type: bind
+        source: ../dbt_project
+        target: /usr/local/airflow/dbt_project
+      - type: bind
+        source: ../scripts
+        target: /usr/local/airflow/scripts
+      - type: bind
+        source: ../data
+        target: /usr/local/airflow/data
+      - type: bind
+        source: ../warehouse
+        target: /usr/local/airflow/warehouse
+
+  dag-processor:
+    volumes:
+      - type: bind
+        source: ../dbt_project
+        target: /usr/local/airflow/dbt_project
+      - type: bind
+        source: ../warehouse
+        target: /usr/local/airflow/warehouse

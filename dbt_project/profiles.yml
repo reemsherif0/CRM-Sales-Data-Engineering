@@ -1,0 +1,6 @@
+crm_dbt:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: "{{ env_var('CRM_DUCKDB_PATH', '../warehouse/crm.duckdb') }}"

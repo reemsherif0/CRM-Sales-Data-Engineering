@@ -1,0 +1,62 @@
+version: 2
+
+models:
+  - name: stg_accounts
+    description: "Cleaned accounts (typos fixed)."
+    columns:
+      - name: account_name
+        data_tests: [unique, not_null]
+      - name: sector
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['employment', 'entertainment', 'finance', 'marketing', 'medical', 'retail', 'services', 'software', 'technology', 'telecommunications']
+
+  - name: stg_products
+    description: "Products catalog."
+    columns:
+      - name: product_name
+        data_tests: [unique, not_null]
+
+  - name: stg_sales_teams
+    description: "Sales agents with manager and regional office."
+    columns:
+      - name: sales_agent_name
+        data_tests: [unique, not_null]
+      - name: regional_office
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['Central', 'East', 'West']
+
+  - name: stg_sales_pipeline
+    description: "Sales opportunities (GTXPro fixed to GTX Pro)."
+    columns:
+      - name: opportunity_id
+        data_tests: [unique, not_null]
+      - name: sales_agent_name
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_sales_teams')
+                field: sales_agent_name
+      - name: product_name
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_products')
+                field: product_name
+      - name: account_name
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_accounts')
+                field: account_name
+      - name: deal_stage
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['Prospecting', 'Engaging', 'Won', 'Lost']

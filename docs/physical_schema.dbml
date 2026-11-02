@@ -1,0 +1,46 @@
+Table dw.fact_opportunities {
+  opportunity_id varchar [pk]
+  account_key bigint [ref: > dw.dim_account.account_key]
+  product_key bigint [ref: > dw.dim_product.product_key]
+  sales_agent_key bigint [ref: > dw.dim_sales_agent.sales_agent_key]
+  engage_date_key integer [ref: > dw.dim_date.date_key]
+  close_date_key integer [ref: > dw.dim_date.date_key]
+  deal_stage varchar
+  close_value bigint
+}
+
+Table dw.dim_account {
+  account_key bigint [pk]
+  account_name varchar
+  sector varchar
+  year_established bigint
+  revenue_musd double
+  employees bigint
+  office_location varchar
+  parent_account_name varchar
+}
+
+Table dw.dim_date {
+  date_key integer [pk]
+  full_date date
+  year bigint
+  quarter bigint
+  month bigint
+  month_name varchar
+  day bigint
+  day_of_week varchar
+}
+
+Table dw.dim_product {
+  product_key bigint [pk]
+  product_name varchar
+  series varchar
+  sales_price bigint
+}
+
+Table dw.dim_sales_agent {
+  sales_agent_key bigint [pk]
+  sales_agent_name varchar
+  manager varchar
+  regional_office varchar
+}
